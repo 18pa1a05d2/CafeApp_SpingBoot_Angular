@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CatergoryService {
@@ -77,6 +78,35 @@ public class CategoryServiceImpl implements CatergoryService {
             e.printStackTrace();
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    //to add more categories
+    @Override
+    public ResponseEntity<String> updateCategory(Map<String, String> requestMap) {
+        try{
+            if(jwtFilter.isAdmin()){
+                //validation if empty data exists then rejected
+                if(validateCategory(requestMap, true)){
+
+                    //Id validation what if we pass wrong ID
+                   Optional optional =  categoryDao.findById(Integer.parseInt(requestMap.get("id")));
+                   if(!optional.isEmpty()){
+
+                        categoryDao.save(getCategoryFromMap(requestMap, true));
+                                return CafeUtilits.getResponseEntity("Category update successfully",HttpStatus.OK);
+                   }else{
+                       return CafeUtilits.getResponseEntity("Category Id does not exist ", HttpStatus.OK);
+                   }
+                }
+                return CafeUtilits.getResponseEntity(CafeConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
+            }else{
+                return CafeUtilits.getResponseEntity(CafeConstants.UNAUTHORISED_ACCESS, HttpStatus.UNAUTHORIZED);
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return CafeUtilits.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 

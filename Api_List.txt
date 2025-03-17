@@ -1,0 +1,85 @@
+Cafe App Api's List:
+-------------------
+* signup user
+
+localhost:8081/user/signup -> post
+
+{
+    "name": "Srinivas",
+    "contactNumber" : "9959604623",
+    "email" : "Srinivasputti12@gmail.com",
+    "password" : "97979797"
+}
+
+* login user
+
+localhost:8081/user/login -> post
+
+{
+    "email": "mahalakshmiputti12@gmail.com",
+    "password" : "97979797"
+}
+
+* Update User
+localhost:8081/user/update -> put
+pass bearer token in auth section
+
+{
+    "id":"3",
+    "status": "true"
+}
+
+* Check Token
+
+localhost:8081/user/checkToken -> get
+Pass Token in auth
+
+* Change Password:
+
+pass Token in auth section
+localhost:8081/user/changePassword -> post
+
+{
+    "oldPassword" : "1234567",
+    "newPassword" : "97979797"
+}
+
+* Forgot Password 
+localhost:8081/user/forgotPassword -> post
+
+{
+    "email" : "mahalakshmiputti62@gmail.com"
+}
+
+===================================================================
+Catergory:
+
+
+* add category
+add token
+
+localhost:8081/category/add -> post
+{
+    "name": "onionBonda"
+}
+
+* Get all products
+localhost:8081/category/get -> get
+add token, pass param is admin true or false
+
+* Update Category -> put
+localhost:8081/category/update -> put
+add token
+
+{
+    "id" : "2",
+    "name" : "MysoreBonda"
+}
+
+
+
+
+
+
+
+
