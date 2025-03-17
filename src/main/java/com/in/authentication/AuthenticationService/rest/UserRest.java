@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequestMapping(path="/user")
-public interface UserRest {
+public interface  UserRest {
 
     @PostMapping(path="/signup")
     public ResponseEntity<String> signUp(@RequestBody(required=true) Map<String, String> requestMap);
@@ -21,4 +21,13 @@ public interface UserRest {
 
     @PutMapping(path="/update")
     public ResponseEntity<String> updateUser(@RequestBody(required=true) Map<String, String> requestMap);
+
+    @GetMapping(path="/checkToken")
+    public ResponseEntity<String> checkToken();
+
+    @PostMapping(path="/changePassword")
+    public ResponseEntity<String> changePassword(@RequestBody(required=true) Map<String, String> requestMap);
+
+    @PostMapping(path="/forgotPassword")
+    public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> requestMap);
 }

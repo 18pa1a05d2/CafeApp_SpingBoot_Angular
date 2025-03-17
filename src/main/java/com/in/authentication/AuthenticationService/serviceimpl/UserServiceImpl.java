@@ -11,6 +11,7 @@ import com.in.authentication.AuthenticationService.utils.CafeUtilits;
 import com.in.authentication.AuthenticationService.utils.EmailUtils;
 import com.in.authentication.AuthenticationService.wrapper.UserWrapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -154,6 +155,7 @@ public class UserServiceImpl implements UserService {
        return CafeUtilits.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+
     private void sendMailtoAllAdmin(String status, String user, List<String> allAdmin) {
         //as we logged in with one user and to avoid duplicate mail to that user we are excluding current user from list
         allAdmin.remove(jwtFilter.getCurrentUser());
@@ -163,4 +165,50 @@ public class UserServiceImpl implements UserService {
             emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(), "Account Disabled", "USER:- "+user+"\n is disabled by \nADMIN:-"+jwtFilter.getCurrentUser() +")",allAdmin);
         }
     }
+
+    //to check token passed
+    @Override
+    public ResponseEntity<String> checkToken() {
+       return CafeUtilits.getResponseEntity("true", HttpStatus.OK);
+    }
+
+    //change Password Method
+    @Override
+    public ResponseEntity<String> changePassword(Map<String, String> requestMap) {
+        try{
+            User user= userdao.findByEmailID(jwtFilter.getCurrentUser());
+            if(!user.equals(null)){
+                //check whether two pwds are same old and new pwds
+               if(user.getPassword().equals(requestMap.get("oldPassword"))){
+                   user.setPassword(requestMap.get("newPassword"));
+                   userdao.save(user);
+                   return CafeUtilits.getResponseEntity("Password changed Successfully", HttpStatus.OK);
+               }
+                return CafeUtilits.getResponseEntity("Old password did not Match", HttpStatus.INTERNAL_SERVER_ERROR);
+            }else{
+                return CafeUtilits.getResponseEntity("USER DOES NOT EXISTS", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return CafeUtilits.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    //Forgot password Method
+    @Override
+    public ResponseEntity<String> forgotPassword(Map<String, String> requestMap) {
+        try{
+            User user= userdao.findByEmailID(requestMap.get("email"));
+            if(!Objects.isNull(user) && !Strings.isNotEmpty(user.getEmail())) {
+                emailUtils.forgetMail(user.getEmail(), "Credentials by Cafe Management", user.getPassword());
+            }
+            return CafeUtilits.getResponseEntity("Check your Mail for credentials", HttpStatus.OK);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return CafeUtilits.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
 }

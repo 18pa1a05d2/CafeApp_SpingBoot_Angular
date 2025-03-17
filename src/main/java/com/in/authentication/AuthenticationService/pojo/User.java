@@ -12,6 +12,7 @@ import java.io.Serializable;
 @NamedQuery(name = "User.getAllUser", query = "select new com.in.authentication.AuthenticationService.wrapper.UserWrapper(u.id,u.name,u.email,u.contactNumber,u.status) from User u where u.role='user'")
 @NamedQuery(name="User.UpdateUser", query="update User u set u.status=:status where u.id=:id")
 @NamedQuery(name = "User.getAllAdmin", query = "select u.email from User u where u.role='admin'")
+//@NamedQuery(name="User.updatePassword", query="update User u set u.password=:password where u.email=:email")
 @Data
 @Entity
 @DynamicUpdate
