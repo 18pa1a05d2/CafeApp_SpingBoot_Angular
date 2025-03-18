@@ -77,6 +77,48 @@ add token
 }
 
 
+===============================================================================
+
+Product:
+
+* add product
+localhost:8081/product/add -> post
+need link with category id as foreign key
+Authorization
+
+{
+    "catergoryId" : "1",
+    "name" : "Pindi Idli",
+    "description" : "Tasty and Yummy",
+    "price" : "50"
+
+}
+
+* get all product
+localhost:8081/product/get -> get
+need to add bearer token
+
+
+* Update a product
+
+localhost:8081/product/update -> put (actually user post in video)
+
+Add bearer token
+
+
+{
+    "catergoryId" : "1",
+    "name" : "Dosa Idli",
+    "description" : "Tasty and Yummy",
+    "price" : "50",
+    "id": "2"
+
+}
+
+
+
+
+
 
 
 
