@@ -23,6 +23,18 @@ public class ProductWrapper {
         this.categoryName = categoryName;
     }
 
+    public ProductWrapper(Integer id, String name, String description, Integer price) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
+    public ProductWrapper(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -11,6 +11,9 @@ localhost:8081/user/signup -> post
     "password" : "97979797"
 }
 
+o/p:
+{"message":"Successfully Registered"}
+
 * login user
 
 localhost:8081/user/login -> post
@@ -19,6 +22,8 @@ localhost:8081/user/login -> post
     "email": "mahalakshmiputti12@gmail.com",
     "password" : "97979797"
 }
+o/p: 
+will receive token as output
 
 * Update User
 localhost:8081/user/update -> put
@@ -28,13 +33,15 @@ pass bearer token in auth section
     "id":"3",
     "status": "true"
 }
+o/p: Updated successfully
 
 * Check Token
 
 localhost:8081/user/checkToken -> get
 Pass Token in auth
+o/p: {"message":"true"}
 
-* Change Password:
+* Change Password: 
 
 pass Token in auth section
 localhost:8081/user/changePassword -> post
@@ -44,12 +51,15 @@ localhost:8081/user/changePassword -> post
     "newPassword" : "97979797"
 }
 
+o/p: {"message":"Password changed Successfully"}
+
 * Forgot Password 
 localhost:8081/user/forgotPassword -> post
 
 {
     "email" : "mahalakshmiputti62@gmail.com"
 }
+o/p: {"message":"Check your Mail for credentials"}
 
 ===================================================================
 Catergory:
@@ -62,10 +72,24 @@ localhost:8081/category/add -> post
 {
     "name": "onionBonda"
 }
+o/p: {"message":"Category added succefully"}
 
 * Get all products
 localhost:8081/category/get -> get
 add token, pass param is admin true or false
+
+o/p: [
+    {
+        "id": 1,
+        "name": "idli"
+    },
+    {
+        "id": 2,
+        "name": "MysoreBonda"
+    }
+]
+
+
 
 * Update Category -> put
 localhost:8081/category/update -> put
@@ -75,6 +99,8 @@ add token
     "id" : "2",
     "name" : "MysoreBonda"
 }
+
+o/p: {"message":"Category update successfully"}
 
 
 ===============================================================================
@@ -94,9 +120,51 @@ Authorization
 
 }
 
+o/p: {"message":"Product added successfully"}
+
 * get all product
 localhost:8081/product/get -> get
 need to add bearer token
+
+o/p: [
+    {
+        "id": 2,
+        "name": "Ragi Idli",
+        "description": "Tasty and Yummy",
+        "price": 50,
+        "status": "true",
+        "categoryId": 2,
+        "categoryName": "Bonda"
+    },
+    {
+        "id": 3,
+        "name": "Pindi Idli",
+        "description": "Tasty and Yummy",
+        "price": 50,
+        "status": "true",
+        "categoryId": 1,
+        "categoryName": "idli"
+    },
+    {
+        "id": 4,
+        "name": "Bonda Idli",
+        "description": "Tasty and Yummy",
+        "price": 50,
+        "status": "true",
+        "categoryId": 1,
+        "categoryName": "idli"
+    },
+    {
+        "id": 5,
+        "name": " tomato Pizza",
+        "description": "Tasty and Yummy",
+        "price": 200,
+        "status": "true",
+        "categoryId": 3,
+        "categoryName": "onionBonda"
+    }
+]
+
 
 
 * Update a product
@@ -113,6 +181,53 @@ Add bearer token
     "price" : "50",
     "id": "2"
 
+}
+o/p: {"message":"Product Updated successfully"}
+
+* Delete a product
+
+localhost:8081/product/delete/1 -> post
+Token required
+
+o/p: {"message":"Product Deleted Successfully"}
+
+* Get product by category Id
+localhost:9001/product/getByCategory/1 -> GET
+Token required
+o/p: 
+[
+    {
+        "id": 3,
+        "name": "Pindi Idli",
+        "description": null,
+        "price": null,
+        "status": null,
+        "categoryId": null,
+        "categoryName": null
+    },
+    {
+        "id": 4,
+        "name": "Bonda Idli",
+        "description": null,
+        "price": null,
+        "status": null,
+        "categoryId": null,
+        "categoryName": null
+    }
+]
+
+* Get product by ID :
+localhost:9001/product/getById/2 -> GET
+Token Required
+o/p:
+{
+    "id": 2,
+    "name": "Ragi Idli",
+    "description": "Tasty and Yummy",
+    "price": 50,
+    "status": null,
+    "categoryId": null,
+    "categoryName": null
 }
 
 

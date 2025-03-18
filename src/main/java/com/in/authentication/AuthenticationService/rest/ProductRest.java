@@ -19,5 +19,18 @@ public interface ProductRest {
     @PutMapping(path="/update")
     ResponseEntity<String> updateProduct(@RequestBody(required = true) Map<String, String> requestMap);
 
+    @PostMapping("/delete/{id}")
+    ResponseEntity<String> deleteProduct(@PathVariable Integer id);
+
+    @PostMapping(path="/updateStatus")
+    ResponseEntity<String> updateStatus(@RequestBody(required= true) Map<String, String> requestMap);
+
+    //to get the data in list<product> when I pass category Id
+    @GetMapping(path="/getByCategory/{id}")
+    ResponseEntity<List<ProductWrapper>> getByCategory(@PathVariable Integer id);
+
+    @GetMapping("/getById/{id}")
+    ResponseEntity<ProductWrapper> getByProductId(@PathVariable Integer id);
+
 
 }
